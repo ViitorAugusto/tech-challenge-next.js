@@ -38,43 +38,55 @@ export function TransactionStatement() {
   return (
     <div className="hidden md:block w-80 bg-white p-6 m-4 rounded-lg">
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-lg font-medium">Extrato</h3>
+        <h3 className="text-[25px] font-bold leading-none tracking-normal align-middle ">
+          Extrato
+        </h3>
+
         <div className="flex gap-2">
           <Button
-            variant="outline"
+            variant="default"
             size="icon"
-            className="h-8 w-8 rounded-full"
+            className="h-10 w-10 rounded-full bg-[#004D61] hover:bg-[#003f50] cursor-pointer"
           >
-            <Edit className="h-4 w-4" />
+            <Edit className="h-5 w-5" />
           </Button>
           <Button
-            variant="outline"
+            variant="default"
             size="icon"
-            className="h-8 w-8 rounded-full"
+            className="h-10 w-10 rounded-full bg-[#004D61] hover:bg-[#003f50] cursor-pointer"
           >
-            <Trash className="h-4 w-4" />
+            <Trash className="h-5 w-5 text-white" />
           </Button>
         </div>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-4">
         {transactions.map((transaction, index) => (
-          <div key={index} className="border-b border-gray-100 pb-2">
-            <div className="text-xs text-green-600">{transaction.month}</div>
-            <div className="flex justify-between items-center">
-              <div>
-                <div>{transaction.type}</div>
+          <div key={index} className="pb-2">
+            <div className="text-sm font-semibold text-green-600 mb-1">
+              {transaction.month}
+            </div>
+
+            <div className="flex justify-between items-center mt-1 mb-3">
+              <div className="space-y-2">
+                <div className="font-normal text-base leading-none align-middle tracking-normal">
+                  {transaction.type}
+                </div>
+
                 <div
                   className={cn(
-                    "font-medium",
-                    transaction.positive ? "text-black" : "text-red-500"
+                    "text-base font-semibold leading-none tracking-normal align-middle"
                   )}
                 >
                   {transaction.amount}
                 </div>
               </div>
-              <div className="text-xs text-gray-500">{transaction.date}</div>
+
+              <div className="text-[13px] font-normal leading-none tracking-normal align-middle font-inter text-gray-500 mb-4">
+                {transaction.date}
+              </div>
             </div>
+            <div className="border-b-2 border-green-400 w-[80%]"></div>
           </div>
         ))}
       </div>
