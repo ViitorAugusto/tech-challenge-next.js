@@ -25,19 +25,12 @@ interface EditModalProps {
   onCancel: () => void;
 }
 
-// Modal para editar transações
 function EditModal({ transaction, onSave, onCancel }: EditModalProps) {
   const [editedTransaction, setEditedTransaction] = useState<Transaction>({ ...transaction });
 
-  // Função para formatar o valor monetário
   const formatCurrency = (value: string) => {
-    // Remove caracteres não numéricos
     const numericValue = value.replace(/\D/g, '');
-
-    // Converte para número e divide por 100 para obter os centavos
     const floatValue = parseFloat(numericValue) / 100;
-
-    // Formata como moeda brasileira
     return `R$ ${floatValue.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`;
   };
 
@@ -146,7 +139,6 @@ export function TransactionStatement() {
     fetchTransactions();
   }, [refresh]);
 
-  // Atualização automática
   useEffect(() => {
     const handler = () => setRefresh(r => r + 1);
     window.addEventListener("transaction:added", handler);
@@ -170,26 +162,21 @@ export function TransactionStatement() {
 
     setIsLoading(true);
     try {
-      // Primeiro obtemos o usuário
       const res = await fetch("http://localhost:3001/users/1");
       const user = await res.json();
 
-      // Filtramos as transações para remover a transação com o ID especificado
       const updatedTransactions = user.transactions.filter(
         (t: Transaction) => t.id !== transactionId
       );
 
-      // Atualizamos o usuário com a nova lista de transações
       await fetch("http://localhost:3001/users/1", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ transactions: updatedTransactions })
       });
 
-      // Disparamos o evento para atualizar o saldo
       window.dispatchEvent(new CustomEvent("transaction:deleted"));
 
-      // Atualizamos a lista de transações local
       setTransactions(updatedTransactions);
     } catch (err) {
       console.error("Erro ao excluir transação:", err);
@@ -202,26 +189,20 @@ export function TransactionStatement() {
   const handleSaveEdit = async (updatedTransaction: Transaction) => {
     setIsLoading(true);
     try {
-      // Primeiro obtemos o usuário
       const res = await fetch("http://localhost:3001/users/1");
       const user = await res.json();
-
-      // Atualizamos a transação específica
       const updatedTransactions = user.transactions.map((t: Transaction) =>
         t.id === updatedTransaction.id ? updatedTransaction : t
       );
 
-      // Enviamos a atualização para o servidor
       await fetch("http://localhost:3001/users/1", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ transactions: updatedTransactions })
       });
 
-      // Disparamos o evento para atualizar o saldo
       window.dispatchEvent(new CustomEvent("transaction:updated"));
 
-      // Atualizamos a lista de transações local
       setTransactions(updatedTransactions);
       setEditingTransaction(null);
     } catch (err) {
@@ -297,7 +278,6 @@ export function TransactionStatement() {
         })}
       </div>
 
-      {/* Modal de Edição */}
       {editingTransaction && (
         <EditModal
           transaction={editingTransaction}

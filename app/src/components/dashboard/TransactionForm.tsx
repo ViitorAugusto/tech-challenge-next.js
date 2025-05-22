@@ -12,12 +12,9 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 function formatBRL(value: string) {
-  // Remove tudo que não for número
   let v = value.replace(/\D/g, "");
   if (!v) return "";
-  // Converte para centavos
   v = (parseInt(v, 10) / 100).toFixed(2);
-  // Formata para BRL
   const brl = v
     .replace(".", ",")
     .replace(/(\d)(?=(\d{3})+,)/g, "$1.")
@@ -88,18 +85,14 @@ export function TransactionForm() {
       creation_date: getTodayBR(),
       value: `R$ ${transactionValue.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
     };
-    // Busca o usuário atual (id 1)
     const res = await fetch("http://localhost:3001/users/1");
     const user = await res.json();
-    // Adiciona a transação ao array existente
     const updatedTransactions = [...(user.transactions || []), transaction];
-    // Atualiza o usuário
     await fetch("http://localhost:3001/users/1", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ transactions: updatedTransactions }),
     });
-    // Dispara evento global para atualizar extrato
     window.dispatchEvent(new Event("transaction:added"));
     setType("");
     setValue("");

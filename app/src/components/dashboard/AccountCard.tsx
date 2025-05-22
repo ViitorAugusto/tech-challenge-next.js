@@ -37,13 +37,11 @@ export function AccountCard({
       const data = await res.json();
       setUser(data);
 
-      // Calcula saldo a partir das transações
       calculateBalance(data.transactions);
     }
     fetchUser();
   }, []);
 
-  // Efeito para atualizar o saldo quando uma transação é adicionada, editada ou excluída
   useEffect(() => {
     const handleTransactionChange = async () => {
       const res = await fetch("http://localhost:3001/users/1");
@@ -66,12 +64,10 @@ export function AccountCard({
   const calculateBalance = (transactions: Transaction[] = []) => {
     let total = 0;
     (transactions || []).forEach((t: Transaction) => {
-      // Extrai valor numérico
       const valor = parseFloat(
         t.value.replace(/[^\d,]/g, "").replace(",", ".")
       );
 
-      // Verifica o tipo de transação
       if (t.type === "payment") {
         total -= valor;
       } else if (t.type === "transfer" && t.transferSign === "sub") {

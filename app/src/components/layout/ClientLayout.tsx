@@ -25,7 +25,6 @@ export function ClientLayout({ children }: { children: ReactNode }) {
     fetchUserName();
   }, [refresh]);
 
-  // Atualizar quando uma transação for adicionada
   useEffect(() => {
     const handleTransactionAdded = () => setRefresh((prev) => prev + 1);
     window.addEventListener("transaction:added", handleTransactionAdded);
@@ -37,7 +36,6 @@ export function ClientLayout({ children }: { children: ReactNode }) {
     <div className="flex flex-col min-h-screen">
       <Header name={userName} />
 
-      {/* Botão hambúrguer mobile */}
       <button
         onClick={() => setMenuOpen(!menuOpen)}
         className="absolute top-4 left-4 md:hidden z-50"
