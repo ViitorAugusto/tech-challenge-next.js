@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, ReactNode } from "react";
+import { useState, useEffect, ReactNode } from "react";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
 import { MobileMenu } from "./MobileMenu";
@@ -8,10 +8,34 @@ import { TransactionStatement } from "../dashboard/TransactionStatement";
 
 export function ClientLayout({ children }: { children: ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [userName, setUserName] = useState("Usuário");
+  const [refresh, setRefresh] = useState(0);
+
+  useEffect(() => {
+    async function fetchUserName() {
+      try {
+        const res = await fetch("http://localhost:3001/users/1");
+        const user = await res.json();
+        setUserName(user.name);
+      } catch (error) {
+        console.error("Erro ao buscar nome do usuário:", error);
+      }
+    }
+
+    fetchUserName();
+  }, [refresh]);
+
+  // Atualizar quando uma transação for adicionada
+  useEffect(() => {
+    const handleTransactionAdded = () => setRefresh((prev) => prev + 1);
+    window.addEventListener("transaction:added", handleTransactionAdded);
+    return () =>
+      window.removeEventListener("transaction:added", handleTransactionAdded);
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header name="Joana da Silva Oliveira" />
+      <Header name={userName} />
 
       {/* Botão hambúrguer mobile */}
       <button
