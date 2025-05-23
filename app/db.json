@@ -51,6 +51,20 @@
           "month": "Maio",
           "creation_date": "22/05/25 19:35:21",
           "value": "R$ 10,00"
+        },
+        {
+          "id": "db7143e5-977a-4479-8a32-3077422d3a77",
+          "type": "deposit",
+          "month": "Maio",
+          "creation_date": "23/05/25 14:14:30",
+          "value": "R$ 20,00"
+        },
+        {
+          "id": "e4b8c1a2-3057-425e-9fcd-2760f462fe14",
+          "type": "payment",
+          "month": "Maio",
+          "creation_date": "23/05/25 14:14:55",
+          "value": "R$ 200,00"
         }
       ]
     }
