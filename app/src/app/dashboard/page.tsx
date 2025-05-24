@@ -11,7 +11,7 @@ export default function HomePage() {
 
   return (
     <>
-      <div className="w-full md:flex-1">
+      <div className="w-full md:flex-1 ">
         <AccountCard
           showBalance={showBalance}
           onToggleBalance={() => setShowBalance(!showBalance)}

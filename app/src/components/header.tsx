@@ -4,7 +4,6 @@ import { User } from "lucide-react";
 export function Header({ name }: { name?: string }) {
   return (
     <>
-      {/* Mobile Header */}
       <header className="md:hidden bg-[#005566] text-white p-4 flex justify-between items-center">
         <div></div>
         <div className="rounded-full border-2 border-orange-500 p-1">
@@ -12,7 +11,6 @@ export function Header({ name }: { name?: string }) {
         </div>
       </header>
 
-      {/* Desktop Header */}
       <header className="hidden md:flex bg-[#005566] text-white p-4 justify-end items-center">
         <div className="flex items-center gap-2">
           <span>{name || "Usuário"}</span>

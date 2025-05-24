@@ -1,0 +1,72 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Joana da Silva Oliveira",
+      "saldo": "R$ 2.500,00",
+      "account_type": "conta-corrente",
+      "account_creation_date": "01/01/2022",
+      "transactions": [
+        {
+          "id": "12e4",
+          "type": "deposit",
+          "month": "Maio",
+          "creation_date": "01/01/22 00:00:00",
+          "value": "R$ 2500,00"
+        },
+        {
+          "id": "4168b6ce-2707-490e-b8ae-490e9056b840",
+          "type": "transfer",
+          "transferSign": "add",
+          "month": "Maio",
+          "creation_date": "22/05/25 00:00:00",
+          "value": "R$ 20,00"
+        },
+        {
+          "id": "bcaed67d-b2f6-4b68-8a9f-c265562773db",
+          "type": "payment",
+          "month": "Maio",
+          "creation_date": "22/05/25 00:00:00",
+          "value": "R$ 100,00"
+        },
+        {
+          "id": "27ee0c79-3daf-4cb2-8832-6c26ebf32c98",
+          "type": "transfer",
+          "transferSign": "add",
+          "month": "Maio",
+          "creation_date": "22/05/25 16:44:11",
+          "value": "R$ 100,00"
+        },
+        {
+          "id": "bfbd5110-3a28-49f0-9739-ff6ca12a453a",
+          "type": "transfer",
+          "transferSign": "sub",
+          "month": "Maio",
+          "creation_date": "22/05/25 16:45:35",
+          "value": "R$ 30,00"
+        },
+        {
+          "id": "4d770df3-c659-441a-bb46-c24745ce0e63",
+          "type": "payment",
+          "month": "Maio",
+          "creation_date": "22/05/25 19:35:21",
+          "value": "R$ 10,00"
+        },
+        {
+          "id": "db7143e5-977a-4479-8a32-3077422d3a77",
+          "type": "deposit",
+          "month": "Maio",
+          "creation_date": "23/05/25 14:14:30",
+          "value": "R$ 20,00"
+        },
+        {
+          "id": "e4b8c1a2-3057-425e-9fcd-2760f462fe14",
+          "type": "payment",
+          "month": "Maio",
+          "creation_date": "23/05/25 14:14:55",
+          "value": "R$ 200,00"
+        }
+      ]
+    }
+  ]
+}

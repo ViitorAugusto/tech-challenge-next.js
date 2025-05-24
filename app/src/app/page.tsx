@@ -20,7 +20,7 @@ export default function BankingInterface() {
         <Sidebar />
 
         <main className="flex-1 flex flex-col md:flex-row">
-          <div className="w-full md:flex-1">
+          <div className="w-full md:flex-1 bg-amber-600">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className="absolute top-4 left-4 md:hidden z-10"
