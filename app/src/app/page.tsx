@@ -1,26 +1,24 @@
-"use client";
-import { useState } from "react";
-
+import { Header } from "@/components/layout/Header";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { AccountCard } from "@/components/dashboard/AccountCard";
 import { TransactionForm } from "@/components/dashboard/TransactionForm";
 import { TransactionStatement } from "@/components/dashboard/TransactionStatement";
-import { Header } from "@/components/layout/Header";
+import { ClientBankingWrapper } from "@/app/client-wrapper";
 
-export default function BankingInterface() {
-  const [showBalance, setShowBalance] = useState(true);
-
+export default async function BankingInterface() {
   return (
     <div className="min-h-screen bg-[#e8f0e9] flex flex-col">
-      <Header />
+      <Header name="Joana da Silva Oliveira" />
+
       <div className="flex flex-1">
         <Sidebar />
 
         <main className="flex-1 flex flex-col md:flex-row">
-          <div className="w-full md:flex-1 bg-amber-600">
+          <div className="w-full md:flex-1 bg-[#e8f0e9]">
+            <ClientBankingWrapper />
             <AccountCard
-              showBalance={showBalance}
-              onToggleBalance={() => setShowBalance(!showBalance)}
+              userId="1"
+              initialShowBalance={true}
             />
             <TransactionForm />
           </div>

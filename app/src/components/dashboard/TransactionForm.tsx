@@ -11,6 +11,7 @@ import {
 import Image from "next/image";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { addTransaction } from "@/app/actions";
 
 function formatBRL(value: string) {
   let v = value.replace(/\D/g, "");
@@ -61,7 +62,6 @@ export function TransactionForm() {
     if (type && e.target.value) setError("");
     else if (!e.target.value) setError("Preencha o tipo e o valor da transação.");
   };
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!type || !value) {
@@ -70,41 +70,47 @@ export function TransactionForm() {
     }
     setError("");
     setLoading(true);
-    const now = new Date();
-    const onlyNumbers = value.replace(/\D/g, "");
-    const numericValue = onlyNumbers ? parseInt(onlyNumbers, 10) / 100 : 0;
-    let transactionType = type;
-    const transactionValue = numericValue;
-    // Se for transferência subtrativa, salva como payment
-    if (type === "transfer" && transferSign === "sub") {
-      transactionType = "payment";
+
+    try {
+      const now = new Date();
+      const onlyNumbers = value.replace(/\D/g, "");
+      const numericValue = onlyNumbers ? parseInt(onlyNumbers, 10) / 100 : 0;
+      let transactionType = type;
+      const transactionValue = numericValue;
+
+      if (type === "transfer" && transferSign === "sub") {
+        transactionType = "payment";
+      }
+
+      const transaction = {
+        id: uuidv4(),
+        type: transactionType,
+        month: getMonthName(now),
+        creation_date: getTodayBR(),
+        value: `R$ ${transactionValue.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+        transferSign: type === "transfer" ? transferSign : undefined
+      };
+
+      const result = await addTransaction(transaction);
+
+      if (result.success) {
+        setType("");
+        setValue("");
+        window.dispatchEvent(new Event("transaction:added"));
+      } else {
+        setError(`Erro ao adicionar transação: ${result.error || 'Falha desconhecida'}`);
+      }
+    } catch (err) {
+      console.error("Erro ao processar transação:", err);
+      setError("Ocorreu um erro ao processar sua transação. Tente novamente.");
+    } finally {
+      setLoading(false);
     }
-    const transaction = {
-      id: uuidv4(),
-      type: transactionType,
-      month: getMonthName(now),
-      creation_date: getTodayBR(),
-      value: `R$ ${transactionValue.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
-    };
-    const res = await fetch("http://localhost:3001/users/1");
-    const user = await res.json();
-    const updatedTransactions = [...(user.transactions || []), transaction];
-    await fetch("http://localhost:3001/users/1", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ transactions: updatedTransactions }),
-    });
-    window.dispatchEvent(new Event("transaction:added"));
-    setType("");
-    setValue("");
-    setLoading(false);
   }
 
   return (
     <div className="relative bg-gray-300 p-6 md:m-4 md:rounded-lg overflow-hidden">
-      {/* Imagens decorativas mobile */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        {/* Canto superior direito */}
         <Image
           src="/img/Pixels1.png"
           alt="Pixels Top"
@@ -113,7 +119,6 @@ export function TransactionForm() {
           className="absolute top-0 right-0 opacity-30"
         />
 
-        {/* Canto inferior direito */}
         <Image
           src="/img/Pixels.png"
           alt="Pixels Bottom"
@@ -123,7 +128,6 @@ export function TransactionForm() {
         />
       </div>
 
-      {/* Conteúdo */}
       <div className="relative z-10">
         <h3 className="text-lg font-medium mb-4">Nova transação</h3>
         {error && <div className="text-red-600 text-sm mb-2">{error}</div>}
@@ -174,5 +178,5 @@ export function TransactionForm() {
       </div>
     </div>
   );
-  
+
 }

@@ -15,56 +15,20 @@
           "value": "R$ 2500,00"
         },
         {
-          "id": "4168b6ce-2707-490e-b8ae-490e9056b840",
-          "type": "transfer",
-          "transferSign": "add",
-          "month": "Maio",
-          "creation_date": "22/05/25 00:00:00",
-          "value": "R$ 20,00"
-        },
-        {
-          "id": "bcaed67d-b2f6-4b68-8a9f-c265562773db",
+          "id": "b754bb8d-9fda-4dde-819b-0b79007bbb86",
           "type": "payment",
-          "month": "Maio",
-          "creation_date": "22/05/25 00:00:00",
-          "value": "R$ 100,00"
+          "month": "Junho",
+          "creation_date": "01/06/25 15:34:43",
+          "value": "R$ 10,00",
+          "transferSign": "sub"
         },
         {
-          "id": "27ee0c79-3daf-4cb2-8832-6c26ebf32c98",
+          "id": "287af740-73d5-4031-b11a-3880f4a0dda2",
           "type": "transfer",
-          "transferSign": "add",
-          "month": "Maio",
-          "creation_date": "22/05/25 16:44:11",
-          "value": "R$ 100,00"
-        },
-        {
-          "id": "bfbd5110-3a28-49f0-9739-ff6ca12a453a",
-          "type": "transfer",
-          "transferSign": "sub",
-          "month": "Maio",
-          "creation_date": "22/05/25 16:45:35",
-          "value": "R$ 30,00"
-        },
-        {
-          "id": "4d770df3-c659-441a-bb46-c24745ce0e63",
-          "type": "payment",
-          "month": "Maio",
-          "creation_date": "22/05/25 19:35:21",
-          "value": "R$ 10,00"
-        },
-        {
-          "id": "db7143e5-977a-4479-8a32-3077422d3a77",
-          "type": "deposit",
-          "month": "Maio",
-          "creation_date": "23/05/25 14:14:30",
-          "value": "R$ 20,00"
-        },
-        {
-          "id": "e4b8c1a2-3057-425e-9fcd-2760f462fe14",
-          "type": "payment",
-          "month": "Maio",
-          "creation_date": "23/05/25 14:14:55",
-          "value": "R$ 200,00"
+          "month": "Junho",
+          "creation_date": "01/06/25 15:34:53",
+          "value": "R$ 20,00",
+          "transferSign": "add"
         }
       ]
     }
