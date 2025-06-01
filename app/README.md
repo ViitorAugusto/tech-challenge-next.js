@@ -102,3 +102,29 @@ npm run json-server
 ### Documentação
 
 Para mais informações sobre o json-server, visite https://github.com/typicode/json-server
+
+## 🚀 Como rodar o Storybook localmente
+
+### 1. Instale as dependências do projeto
+
+```bash
+npm install
+# ou
+yarn install
+```
+
+### 2. Rode o Storybook
+
+Após instalar as dependências, inicie o Storybook com:
+
+```bash
+npm run storybook
+# ou
+yarn storybook
+```
+
+O Storybook abrirá automaticamente no navegador em:
+
+```
+http://localhost:6006
+```
