@@ -1,6 +1,4 @@
 import Image from "next/image";
-
-// Importando a parte client-side em um arquivo separado
 import { BalanceToggleClient } from "./BalanceToggleClient";
 
 interface AccountCardProps {
@@ -26,7 +24,6 @@ interface Transaction {
   transferSign?: "add" | "sub";
 }
 
-// Função para calcular o saldo com base nas transações
 function calculateBalance(transactions: Transaction[] = []): string {
   let total = 0;
   (transactions || []).forEach((t: Transaction) => {
@@ -49,7 +46,6 @@ function calculateBalance(transactions: Transaction[] = []): string {
   })}`;
 }
 
-// Função para buscar dados do usuário no servidor
 async function getUserData(userId: string = "1"): Promise<User> {
   const res = await fetch(`http://localhost:3001/users/${userId}`, { cache: 'no-store' });
   if (!res.ok) {
@@ -65,9 +61,7 @@ export async function AccountCard({
   const user = await getUserData(userId);
   const saldo = calculateBalance(user.transactions); return (
     <div className="relative bg-[#005566] text-white my-6 mx-4 rounded-2xl p-6 md:m-4 md:rounded-lg overflow-hidden h-[80vh] md:h-auto">
-      {/* Imagens decorativas mobile */}
       <div className="absolute inset-0 md:hidden z-0 pointer-events-none">
-        {/* Canto inferior esquerdo */}
         <Image
           src="/img/Ilustração1.png"
           alt="Ilustração"
@@ -75,8 +69,6 @@ export async function AccountCard({
           height={200}
           className="absolute bottom-4 left-4 opacity-80"
         />
-
-        {/* Canto inferior direito */}
         <Image
           src="/img/Pixels.png"
           alt="Pixels"
@@ -84,8 +76,6 @@ export async function AccountCard({
           height={150}
           className="absolute bottom-0 right-0 opacity-30"
         />
-
-        {/* Canto superior direito */}
         <Image
           src="/img/Pixels1.png"
           alt="Pixels Top"
@@ -94,8 +84,6 @@ export async function AccountCard({
           className="absolute top-0 left-0 opacity-30"
         />
       </div>
-
-      {/* Conteúdo */}
       <div className="relative z-10 flex flex-col justify-center items-center">
         <div className="mb-6">
           <h2 className="text-xl font-normal">

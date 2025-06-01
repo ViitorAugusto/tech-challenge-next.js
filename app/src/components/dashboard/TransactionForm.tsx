@@ -78,7 +78,6 @@ export function TransactionForm() {
       let transactionType = type;
       const transactionValue = numericValue;
 
-      // Se for transferência subtrativa, salva como payment
       if (type === "transfer" && transferSign === "sub") {
         transactionType = "payment";
       }
@@ -92,14 +91,11 @@ export function TransactionForm() {
         transferSign: type === "transfer" ? transferSign : undefined
       };
 
-      // Usar a Server Action para adicionar a transação
       const result = await addTransaction(transaction);
 
       if (result.success) {
-        // Limpar o formulário após o sucesso
         setType("");
         setValue("");
-        // Ainda manteremos o evento para eventuais listeners de cliente
         window.dispatchEvent(new Event("transaction:added"));
       } else {
         setError(`Erro ao adicionar transação: ${result.error || 'Falha desconhecida'}`);
@@ -114,9 +110,7 @@ export function TransactionForm() {
 
   return (
     <div className="relative bg-gray-300 p-6 md:m-4 md:rounded-lg overflow-hidden">
-      {/* Imagens decorativas mobile */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        {/* Canto superior direito */}
         <Image
           src="/img/Pixels1.png"
           alt="Pixels Top"
@@ -125,7 +119,6 @@ export function TransactionForm() {
           className="absolute top-0 right-0 opacity-30"
         />
 
-        {/* Canto inferior direito */}
         <Image
           src="/img/Pixels.png"
           alt="Pixels Bottom"
@@ -135,7 +128,6 @@ export function TransactionForm() {
         />
       </div>
 
-      {/* Conteúdo */}
       <div className="relative z-10">
         <h3 className="text-lg font-medium mb-4">Nova transação</h3>
         {error && <div className="text-red-600 text-sm mb-2">{error}</div>}

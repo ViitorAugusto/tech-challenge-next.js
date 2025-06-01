@@ -24,10 +24,11 @@
         },
         {
           "id": "287af740-73d5-4031-b11a-3880f4a0dda2",
-          "type": "deposit",
+          "type": "transfer",
           "month": "Junho",
           "creation_date": "01/06/25 15:34:53",
-          "value": "R$ 20,00"
+          "value": "R$ 20,00",
+          "transferSign": "add"
         }
       ]
     }
