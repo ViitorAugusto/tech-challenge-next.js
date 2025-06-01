@@ -1,11 +1,11 @@
-"use client";
-import { Eye } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+
+// Importando a parte client-side em um arquivo separado
+import { BalanceToggleClient } from "./BalanceToggleClient";
 
 interface AccountCardProps {
-  showBalance: boolean;
-  onToggleBalance: () => void;
+  userId?: string;
+  initialShowBalance?: boolean;
 }
 
 interface User {
@@ -16,6 +16,7 @@ interface User {
   account_creation_date: string;
   transactions: Transaction[];
 }
+
 interface Transaction {
   id: string;
   type: string;
@@ -25,73 +26,44 @@ interface Transaction {
   transferSign?: "add" | "sub";
 }
 
-export function AccountCard({
-  showBalance,
-  onToggleBalance,
-}: AccountCardProps) {
-  const [user, setUser] = useState<User | null>(null);
-  const [saldo, setSaldo] = useState<string>("R$ 0,00");
-
-  useEffect(() => {
-    async function fetchUser() {
-      const res = await fetch("http://localhost:3001/users/1");
-      const data = await res.json();
-      setUser(data);
-      calculateBalance(data.transactions);
-    }
-    fetchUser();
-  }, []);
-
-  useEffect(() => {
-    const handleTransactionChange = async () => {
-      const res = await fetch("http://localhost:3001/users/1");
-      const data = await res.json();
-      setUser(data);
-      calculateBalance(data.transactions);
-    };
-
-    window.addEventListener("transaction:added", handleTransactionChange);
-    window.addEventListener("transaction:updated", handleTransactionChange);
-    window.addEventListener("transaction:deleted", handleTransactionChange);
-
-    return () => {
-      window.removeEventListener("transaction:added", handleTransactionChange);
-      window.removeEventListener(
-        "transaction:updated",
-        handleTransactionChange
-      );
-      window.removeEventListener(
-        "transaction:deleted",
-        handleTransactionChange
-      );
-    };
-  }, []);
-
-  const calculateBalance = (transactions: Transaction[] = []) => {
-    let total = 0;
-    (transactions || []).forEach((t: Transaction) => {
-      const valor = parseFloat(
-        t.value.replace(/[^\d,]/g, "").replace(",", ".")
-      );
-
-      if (t.type === "payment") {
-        total -= valor;
-      } else if (t.type === "transfer" && t.transferSign === "sub") {
-        total -= valor;
-      } else {
-        total += valor;
-      }
-    });
-
-    setSaldo(
-      `R$ ${total.toLocaleString("pt-BR", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      })}`
+// Função para calcular o saldo com base nas transações
+function calculateBalance(transactions: Transaction[] = []): string {
+  let total = 0;
+  (transactions || []).forEach((t: Transaction) => {
+    const valor = parseFloat(
+      t.value.replace(/[^\d,]/g, "").replace(",", ".")
     );
-  };
 
-  return (
+    if (t.type === "payment") {
+      total -= valor;
+    } else if (t.type === "transfer" && t.transferSign === "sub") {
+      total -= valor;
+    } else {
+      total += valor;
+    }
+  });
+
+  return `R$ ${total.toLocaleString("pt-BR", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })}`;
+}
+
+// Função para buscar dados do usuário no servidor
+async function getUserData(userId: string = "1"): Promise<User> {
+  const res = await fetch(`http://localhost:3001/users/${userId}`, { cache: 'no-store' });
+  if (!res.ok) {
+    throw new Error('Falha ao carregar dados do usuário');
+  }
+  return res.json();
+}
+
+export async function AccountCard({
+  userId = "1",
+  initialShowBalance = false,
+}: AccountCardProps) {
+  const user = await getUserData(userId);
+  const saldo = calculateBalance(user.transactions); return (
     <div className="relative bg-[#005566] text-white my-6 mx-4 rounded-2xl p-6 md:m-4 md:rounded-lg overflow-hidden h-[80vh] md:h-auto">
       {/* Imagens decorativas mobile */}
       <div className="absolute inset-0 md:hidden z-0 pointer-events-none">
@@ -124,10 +96,10 @@ export function AccountCard({
       </div>
 
       {/* Conteúdo */}
-      <div className="relative z-10  flex flex-col justify-center items-center">
+      <div className="relative z-10 flex flex-col justify-center items-center">
         <div className="mb-6">
           <h2 className="text-xl font-normal">
-            Olá, {user ? user.name.split(" ")[0] : "..."}! :)
+            Olá, {user.name.split(" ")[0]}! :)
           </h2>
           <p className="text-sm mt-1">
             {new Date().toLocaleDateString("pt-BR", {
@@ -139,24 +111,14 @@ export function AccountCard({
           </p>
         </div>
 
-        <div className="mt-8 ">
-          <div className="flex items-center justify-between">
-            <h3 className="text-lg font-medium">Saldo</h3>
-            <button onClick={onToggleBalance}>
-              <Eye className="h-5 w-5" />
-            </button>
-          </div>
-          <div className="border-b border-white w-24 mb-2"></div>
+        <div className="mt-8">
           <p className="text-sm">
-            {user
-              ? user.account_type === "poupança"
-                ? "Poupança"
-                : "Conta Corrente"
-              : "..."}
+            {user.account_type === "poupança" ? "Poupança" : "Conta Corrente"}
           </p>
-          <p className="text-2xl font-bold mt-1">
-            {showBalance ? saldo : "R$ ••••••"}
-          </p>
+          <BalanceToggleClient
+            initialShowBalance={initialShowBalance}
+            saldo={saldo}
+          />
         </div>
       </div>
     </div>

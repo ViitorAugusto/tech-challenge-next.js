@@ -11,6 +11,7 @@ import {
 import Image from "next/image";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { addTransaction } from "@/app/actions";
 
 function formatBRL(value: string) {
   let v = value.replace(/\D/g, "");
@@ -61,7 +62,6 @@ export function TransactionForm() {
     if (type && e.target.value) setError("");
     else if (!e.target.value) setError("Preencha o tipo e o valor da transação.");
   };
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!type || !value) {
@@ -70,34 +70,46 @@ export function TransactionForm() {
     }
     setError("");
     setLoading(true);
-    const now = new Date();
-    const onlyNumbers = value.replace(/\D/g, "");
-    const numericValue = onlyNumbers ? parseInt(onlyNumbers, 10) / 100 : 0;
-    let transactionType = type;
-    const transactionValue = numericValue;
-    // Se for transferência subtrativa, salva como payment
-    if (type === "transfer" && transferSign === "sub") {
-      transactionType = "payment";
+
+    try {
+      const now = new Date();
+      const onlyNumbers = value.replace(/\D/g, "");
+      const numericValue = onlyNumbers ? parseInt(onlyNumbers, 10) / 100 : 0;
+      let transactionType = type;
+      const transactionValue = numericValue;
+
+      // Se for transferência subtrativa, salva como payment
+      if (type === "transfer" && transferSign === "sub") {
+        transactionType = "payment";
+      }
+
+      const transaction = {
+        id: uuidv4(),
+        type: transactionType,
+        month: getMonthName(now),
+        creation_date: getTodayBR(),
+        value: `R$ ${transactionValue.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+        transferSign: type === "transfer" ? transferSign : undefined
+      };
+
+      // Usar a Server Action para adicionar a transação
+      const result = await addTransaction(transaction);
+
+      if (result.success) {
+        // Limpar o formulário após o sucesso
+        setType("");
+        setValue("");
+        // Ainda manteremos o evento para eventuais listeners de cliente
+        window.dispatchEvent(new Event("transaction:added"));
+      } else {
+        setError(`Erro ao adicionar transação: ${result.error || 'Falha desconhecida'}`);
+      }
+    } catch (err) {
+      console.error("Erro ao processar transação:", err);
+      setError("Ocorreu um erro ao processar sua transação. Tente novamente.");
+    } finally {
+      setLoading(false);
     }
-    const transaction = {
-      id: uuidv4(),
-      type: transactionType,
-      month: getMonthName(now),
-      creation_date: getTodayBR(),
-      value: `R$ ${transactionValue.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
-    };
-    const res = await fetch("http://localhost:3001/users/1");
-    const user = await res.json();
-    const updatedTransactions = [...(user.transactions || []), transaction];
-    await fetch("http://localhost:3001/users/1", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ transactions: updatedTransactions }),
-    });
-    window.dispatchEvent(new Event("transaction:added"));
-    setType("");
-    setValue("");
-    setLoading(false);
   }
 
   return (
@@ -174,5 +186,5 @@ export function TransactionForm() {
       </div>
     </div>
   );
-  
+
 }
