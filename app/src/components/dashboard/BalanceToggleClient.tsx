@@ -10,7 +10,7 @@ interface BalanceToggleClientProps {
 
 export function BalanceToggleClient({
   initialShowBalance = false,
-  saldo
+  saldo,
 }: BalanceToggleClientProps) {
   const [showBalance, setShowBalance] = useState(initialShowBalance);
 
@@ -23,13 +23,14 @@ export function BalanceToggleClient({
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-medium">Saldo</h3>
         <button onClick={toggleBalance}>
-          <Eye className="h-5 w-5" />
+          <Eye className="h-5 w-5 text-orange-500" />
         </button>
       </div>
-      <div className="border-b border-white w-24 mb-2"></div>
+      <div className="border-b-2 border-orange-500 w-full my-2 "></div>
       <p className="text-2xl font-bold mt-1">
         {showBalance ? saldo : "R$ ••••••"}
       </p>
+      <p className="text-sm mt-2">Conta Corrente</p>
     </div>
   );
 }

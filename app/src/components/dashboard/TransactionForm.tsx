@@ -109,14 +109,14 @@ export function TransactionForm() {
   }
 
   return (
-    <div className="relative bg-gray-300 p-6 md:m-4 md:rounded-lg overflow-hidden">
-      <div className="absolute inset-0 z-0 pointer-events-none">
+    <div className="relative bg-gray-400 p-6 md:m-4 rounded-lg overflow-hidden h-[350px] mx-4">
+      <div className="absolute inset-0 z-10 pointer-events-none ">
         <Image
           src="/img/Pixels1.png"
           alt="Pixels Top"
           width={180}
           height={180}
-          className="absolute top-0 right-0 opacity-30"
+          className="absolute top-0 right-0  z-0"
         />
 
         <Image
@@ -124,14 +124,14 @@ export function TransactionForm() {
           alt="Pixels Bottom"
           width={200}
           height={200}
-          className="absolute bottom-0 right-0 opacity-30"
+          className="absolute bottom-0 left-0 "
         />
       </div>
 
-      <div className="relative z-10">
+      <div className="relative z-10 w-1/2">
         <h3 className="text-lg font-medium mb-4">Nova transação</h3>
         {error && <div className="text-red-600 text-sm mb-2">{error}</div>}
-        <form className="space-y-4" onSubmit={handleSubmit}>
+        <form className="space-y-8" onSubmit={handleSubmit}>
           <Select value={type} onValueChange={handleTypeChange}>
             <SelectTrigger className="w-full bg-white">
               <SelectValue placeholder="Selecione o tipo de transação" />

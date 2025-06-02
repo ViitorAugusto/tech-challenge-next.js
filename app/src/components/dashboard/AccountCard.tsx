@@ -26,10 +26,8 @@ interface Transaction {
 
 function calculateBalance(transactions: Transaction[] = []): string {
   let total = 0;
-  (transactions || []).forEach((t: Transaction) => {
-    const valor = parseFloat(
-      t.value.replace(/[^\d,]/g, "").replace(",", ".")
-    );
+  transactions.forEach((t: Transaction) => {
+    const valor = parseFloat(t.value.replace(/[^\d,]/g, "").replace(",", "."));
 
     if (t.type === "payment") {
       total -= valor;
@@ -47,9 +45,11 @@ function calculateBalance(transactions: Transaction[] = []): string {
 }
 
 async function getUserData(userId: string = "1"): Promise<User> {
-  const res = await fetch(`http://localhost:3001/users/${userId}`, { cache: 'no-store' });
+  const res = await fetch(`http://localhost:3001/users/${userId}`, {
+    cache: "no-store",
+  });
   if (!res.ok) {
-    throw new Error('Falha ao carregar dados do usuário');
+    throw new Error("Falha ao carregar dados do usuário");
   }
   return res.json();
 }
@@ -59,8 +59,14 @@ export async function AccountCard({
   initialShowBalance = false,
 }: AccountCardProps) {
   const user = await getUserData(userId);
-  const saldo = calculateBalance(user.transactions); return (
-    <div className="relative bg-[#005566] text-white my-6 mx-4 rounded-2xl p-6 md:m-4 md:rounded-lg overflow-hidden h-[80vh] md:h-auto">
+  const saldo = calculateBalance(user.transactions);
+
+  return (
+    <div
+      className="relative bg-[#005566] text-white my-6 mx-4 rounded-2xl p-6
+  md:m-4 md:rounded-lg overflow-hidden h-[80vh] md:h-[350px]"
+    >
+      {/* Imagens decorativas para mobile */}
       <div className="absolute inset-0 md:hidden z-0 pointer-events-none">
         <Image
           src="/img/Ilustração1.png"
@@ -84,9 +90,22 @@ export async function AccountCard({
           className="absolute top-0 left-0 opacity-30"
         />
       </div>
-      <div className="relative z-10 flex flex-col justify-center items-center">
-        <div className="mb-6">
-          <h2 className="text-xl font-normal">
+
+      {/* Espaços reservados para layout em telas grandes (sem imagem visível) */}
+      <div className="hidden md:block absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute top-0 left-0 w-[180px] h-[180px]" />
+        <div className="absolute top-1/2 -translate-y-1/2 left-4 w-[260px] h-[260px]" />
+        <div className="absolute bottom-0 right-0 w-[200px] h-[200px]" />
+      </div>
+
+      {/* Conteúdo principal */}
+      <div
+        className="relative z-10 flex flex-col items-center justify-center text-center
+           md:flex-row md:items-start md:justify-between md:text-left md:gap-4"
+      >
+        {/* Saudação */}
+        <div className="mb-6 md:mb-0">
+          <h2 className="text-xl font-normal py-2">
             Olá, {user.name.split(" ")[0]}! :)
           </h2>
           <p className="text-sm mt-1">
@@ -99,14 +118,13 @@ export async function AccountCard({
           </p>
         </div>
 
-        <div className="mt-8">
-          <p className="text-sm">
-            {user.account_type === "poupança" ? "Poupança" : "Conta Corrente"}
-          </p>
+        {/* Saldo */}
+        <div className="mt-8 md:mt-20 md:mr-10 md:text-right space-y-2">
           <BalanceToggleClient
             initialShowBalance={initialShowBalance}
             saldo={saldo}
           />
+        
         </div>
       </div>
     </div>
