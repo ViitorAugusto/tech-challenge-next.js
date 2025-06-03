@@ -14,18 +14,14 @@ import { v4 as uuidv4 } from "uuid";
 import { addTransaction } from "@/app/actions";
 
 function formatBRL(value: string) {
-  let v = value.replace(/\D/g, "");
-  if (!v) return "";
-  v = (parseInt(v, 10) / 100).toFixed(2);
-  const brl = v
-    .replace(".", ",")
-    .replace(/(\d)(?=(\d{3})+,)/g, "$1.")
-    .replace(/^(\d+),(\d{2})$/, (m, int, dec) => {
-      return (
-        int.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "," + dec
-      );
-    });
-  return `R$ ${brl}`;
+  const numeric = Number(value.replace(/\D/g, "")) / 100;
+  if (isNaN(numeric) || numeric === 0) return "";
+
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+    minimumFractionDigits: 2,
+  }).format(numeric);
 }
 
 export function TransactionForm() {
@@ -36,19 +32,16 @@ export function TransactionForm() {
   const [transferSign, setTransferSign] = useState<"add" | "sub">("add");
 
   function getMonthName(date: Date) {
-    const mes = date.toLocaleString("pt-BR", { month: "long" });
-    return mes.charAt(0).toUpperCase() + mes.slice(1);
+    const formatter = new Intl.DateTimeFormat("pt-BR", { month: "long" });
+    const month = formatter.format(date);
+    return month.charAt(0).toUpperCase() + month.slice(1);
   }
 
   function getTodayBR() {
-    const d = new Date();
-    const day = String(d.getDate()).padStart(2, "0");
-    const month = String(d.getMonth() + 1).padStart(2, "0");
-    const year = String(d.getFullYear()).slice(-2);
-    const hours = String(d.getHours()).padStart(2, "0");
-    const minutes = String(d.getMinutes()).padStart(2, "0");
-    const seconds = String(d.getSeconds()).padStart(2, "0");
-    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+    return new Intl.DateTimeFormat("pt-BR", {
+      dateStyle: "short",
+      timeStyle: "medium",
+    }).format(new Date());
   }
 
   const handleTypeChange = (val: string) => {
@@ -159,7 +152,7 @@ export function TransactionForm() {
             <p className="mb-2">Valor</p>
             <Input
               type="text"
-              placeholder="R$ 00,00"
+              placeholder="R$ 0,00"
               className="bg-white"
               value={formatBRL(value)}
               onChange={handleValueChange}

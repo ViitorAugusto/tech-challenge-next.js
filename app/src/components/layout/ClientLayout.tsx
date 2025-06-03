@@ -4,6 +4,7 @@ import { useState, useEffect, ReactNode } from "react";
 import { Sidebar } from "./Sidebar";
 import { TransactionStatement } from "../dashboard/TransactionStatement";
 import { Header } from "./Header";
+import { Tabs } from "../ui/tabs";
 
 export function ClientLayout({ children }: { children: ReactNode }) {
   const [userName, setUserName] = useState("Usuário");
@@ -36,7 +37,8 @@ export function ClientLayout({ children }: { children: ReactNode }) {
 
       <div className="flex flex-1 container mx-auto">
         <Sidebar />
-        <main className="flex-1 flex flex-col md:flex-row">{children}</main>
+        <main className="flex-1 flex flex-col lg:flex-row">{children}</main>
+        <Tabs />
         <TransactionStatement />
       </div>
     </div>

@@ -5,7 +5,7 @@ export async function TransactionStatement({ userId = "1" }: { userId?: string }
   const transactions = await getUserTransactions(userId);
 
   return (
-    <div className="md:block md:w-80 bg-white p-6 m-4 rounded-lg">
+    <div className="lg:block lg:w-80 bg-white p-6 m-4 rounded-lg">
       <h3 className="text-[25px] font-bold mb-6">Extrato</h3>
 
       <div className="space-y-4">
