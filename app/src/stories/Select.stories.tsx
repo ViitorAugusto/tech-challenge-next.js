@@ -32,22 +32,7 @@ const meta = {
       description: "Disables the select",
       table: {
         type: { summary: "boolean" },
-        defaultValue: { summary: false },
-      },
-    },
-    size: {
-      control: { type: "inline-radio", options: ["sm", "default"] },
-      description: "Size of the select trigger",
-      table: {
-        type: { summary: "'sm' | 'default'" },
-        defaultValue: { summary: "default" },
-      },
-    },
-    placeholder: {
-      control: "text",
-      description: "Placeholder text shown in the SelectValue",
-      table: {
-        type: { summary: "string" },
+        defaultValue: { summary: "false" },
       },
     },
     onValueChange: {

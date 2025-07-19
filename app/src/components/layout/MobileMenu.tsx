@@ -14,9 +14,9 @@ export function MobileMenu({ onClose }: { onClose: () => void }) {
           <li className="py-3 text-orange-500 font-medium border-b border-green-500">
             Início
           </li>
-          <li className="py-3 border-b border-gray-300 text-gray-300" aria-disabled>Transferências</li>
-          <li className="py-3 border-b border-gray-300 text-gray-300" aria-disabled>Investimentos</li>
-          <li className="py-3 border-b border-gray-300 text-gray-300" aria-disabled>Outros serviços</li>
+          <li className="py-3 border-b border-gray-300 text-gray-300">Transferências</li>
+          <li className="py-3 border-b border-gray-300 text-gray-300">Investimentos</li>
+          <li className="py-3 border-b border-gray-300 text-gray-300">Outros serviços</li>
         </ul>
       </nav>
     </div>
