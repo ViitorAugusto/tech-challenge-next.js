@@ -97,8 +97,7 @@ export async function AccountCard({
       </div>
 
       <div
-        className="relative z-10 flex flex-col items-center justify-center text-center
-           md:flex-row md:items-start md:justify-between md:text-left md:gap-4"
+        className="relative z-10 flex flex-col items-center justify-center text-center md:flex-row md:items-start md:justify-between md:text-left md:gap-4"
       >
         <div className="mb-6 md:mb-0">
           <h2 className="text-xl font-normal py-2">
@@ -119,7 +118,7 @@ export async function AccountCard({
             initialShowBalance={initialShowBalance}
             saldo={saldo}
           />
-        
+
         </div>
       </div>
     </div>

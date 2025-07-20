@@ -347,23 +347,7 @@ export function TransactionClient({ transactions }: TransactionClientProps) {
     try {
       // Aqui você enviaria o arquivo para um serviço de armazenamento (como S3, Firebase Storage, etc)
       // e guardaria a URL ou referência do arquivo
-      // Como é um exemplo, vamos apenas simular o sucesso do upload
-
-      // Exemplo de código que seria usado:
-      // if (receiptFile) {
-      //   const formData = new FormData();
-      //   formData.append('file', receiptFile);
-      //   formData.append('transactionId', updatedTransaction.id);
-      //   const uploadResponse = await fetch('/api/upload-receipt', {
-      //     method: 'POST',
-      //     body: formData
-      //   });
-      //   if (!uploadResponse.ok) {
-      //     throw new Error('Erro ao fazer upload do comprovante');
-      //   }
-      //   const { fileUrl } = await uploadResponse.json();
-      //   updatedTransaction.receiptUrl = fileUrl;
-      // }
+      //...
 
       // Agora atualize a transação
       const result = await updateTransaction(updatedTransaction);

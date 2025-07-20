@@ -9,9 +9,7 @@ interface MicroFrontendProps {
   fallback?: ReactNode;
 }
 
-/**
- * Componente que carrega e renderiza um micro-frontend
- */
+/*Componente que carrega e renderiza um micro-frontend*/
 export function MicroFrontend({
   name,
   host,
