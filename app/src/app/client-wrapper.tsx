@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, ReactNode } from "react";
 import { MobileMenu } from "@/components/layout/MobileMenu";
+import ReactQueryProvider from "@/context/ReactQueryProvider";
 
 export function ClientBankingWrapper() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -19,5 +20,13 @@ export function ClientBankingWrapper() {
         <div className="w-6 h-0.5 bg-green-500" />
       </button>
     </>
+  );
+}
+
+export function ClientWrapper({ children }: { children: ReactNode }) {
+  return (
+    <ReactQueryProvider>
+      {children}
+    </ReactQueryProvider>
   );
 }
