@@ -1,5 +1,5 @@
 # Estágio de compilação
-FROM node:24-alpine AS builder
+FROM node:20-bullseye AS builder
 
 WORKDIR /app
 
@@ -8,17 +8,17 @@ COPY package*.json ./
 COPY next.config.ts ./
 COPY tsconfig.json ./
 
-# Instalar dependências
-RUN npm ci
+# Instalar dependências com configurações para Node.js 22.16
+RUN NODE_OPTIONS="--no-warnings" npm ci
 
 # Copiar o código fonte
 COPY . .
 
 # Construir a aplicação
-RUN npm run build
+RUN NODE_OPTIONS="--no-warnings" npm run build
 
 # Estágio de produção
-FROM node:24-alpine AS production
+FROM node:20-alpine AS production
 
 WORKDIR /app
 
@@ -29,6 +29,10 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/db.json ./db.json
+COPY --from=builder /app/start.sh ./
+
+# Tornar o script de inicialização executável
+RUN chmod +x ./start.sh
 
 # Expor a porta
 EXPOSE 3000
@@ -37,6 +41,7 @@ EXPOSE 3001
 # Configurar variáveis de ambiente para produção
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_OPTIONS="--no-warnings"
 
-# Iniciar o servidor Next.js e o JSON Server
-CMD npm run json-server & npm start
+# Iniciar o servidor usando o script start.sh
+CMD ["sh", "./start.sh"]

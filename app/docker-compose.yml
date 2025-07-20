@@ -11,9 +11,10 @@ services:
       - "3001:3001" # Porta do JSON Server
     environment:
       - NODE_ENV=production
+      - NODE_OPTIONS=--no-warnings
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3

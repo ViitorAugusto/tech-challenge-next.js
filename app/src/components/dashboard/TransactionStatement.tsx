@@ -1,8 +1,13 @@
-import { getUserTransactions } from "@/app/actions";
+import { getPaginatedTransactions } from "@/app/transactionActions";
 import { TransactionStatementClient } from "./TransactionStatementClient";
 
 export async function TransactionStatement({ userId = "1" }: { userId?: string }) {
-  const transactions = await getUserTransactions(userId);
+  // Buscamos apenas a primeira página de transações inicialmente
+  const { transactions, totalCount, hasMore } = await getPaginatedTransactions({
+    userId,
+    page: 1,
+    limit: 5 // Limitamos a 5 transações por página para melhor experiência de scroll
+  });
 
   return (
     <div className="lg:block lg:w-80 bg-white p-6 m-4 rounded-lg h-[500px]">
@@ -12,7 +17,12 @@ export async function TransactionStatement({ userId = "1" }: { userId?: string }
         {transactions.length === 0 ? (
           <div className="text-gray-500 text-center">Nenhuma transação encontrada.</div>
         ) : (
-          <TransactionStatementClient transactions={transactions} />
+          <TransactionStatementClient
+            initialTransactions={transactions}
+            userId={userId}
+            initialHasMore={hasMore}
+            totalCount={totalCount}
+          />
         )}
       </div>
     </div>
