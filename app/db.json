@@ -106,6 +106,20 @@
           "month": "Julho",
           "creation_date": "19/07/2025, 22:06:18",
           "value": "R$ 750,00"
+        },
+        {
+          "id": "b973cd80-f5a0-4373-bd7c-68dbd8accad2",
+          "type": "deposit",
+          "month": "Julho",
+          "creation_date": "21/07/2025, 08:41:48",
+          "value": "R$ 10,00"
+        },
+        {
+          "id": "00549435-826e-4606-8261-811030fdc349",
+          "type": "payment",
+          "month": "Julho",
+          "creation_date": "21/07/2025, 09:29:39",
+          "value": "R$ 10,00"
         }
       ]
     }

@@ -4,9 +4,8 @@ import { Transaction } from "@/app/actions";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 
-// Carregamento dinâmico do componente FinancialCharts
 const FinancialCharts = dynamic(() =>
-  import('@/components/dashboard/FinancialCharts').then(mod => ({
+  import('@/app/analytics/_components/FinancialCharts').then(mod => ({
     default: mod.FinancialCharts
   })), {
   ssr: false,
