@@ -9,7 +9,7 @@ export default async function AnalyticsPage() {
     <div className="space-y-6 md:pl-6">
       {/* Header da página */}
       <div className="bg-gradient-to-r from-[#005566] to-[#007788] rounded-lg p-6 text-white">
-        <h1 className="text-3xl font-bold mb-2">Analytics Financeiro</h1>
+        <h1 className="text-3xl font-bold mb-2">Análise Financeira</h1>
         <p className="text-lg opacity-90">
           Visão completa dos seus dados financeiros
         </p>
