@@ -9,7 +9,7 @@ export function Sidebar() {
   const menuItems = [
     { name: "Início", href: "/", active: pathname === "/" },
     {
-      name: "Resumo Financeiro",
+      name: "Análise Financeiras",
       href: "/analytics",
       active: pathname === "/analytics",
     },
