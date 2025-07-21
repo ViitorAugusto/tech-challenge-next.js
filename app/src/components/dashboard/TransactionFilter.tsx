@@ -98,14 +98,14 @@ export function TransactionFilter() {
             <div>
               <label className="text-sm font-medium block mb-1">Tipo</label>
               <Select
-                value={localFilter.type || ""}
+                value={localFilter.type || "all"}
                 onValueChange={(value) => setLocalFilter(prev => ({ ...prev, type: value || null }))}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Todos os tipos" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Todos os tipos</SelectItem>
+                  <SelectItem value="all">Todos os tipos</SelectItem>
                   <SelectItem value="deposit">Depósito</SelectItem>
                   <SelectItem value="payment">Pagamento</SelectItem>
                   <SelectItem value="transfer">Transferência</SelectItem>
@@ -116,14 +116,14 @@ export function TransactionFilter() {
             <div>
               <label className="text-sm font-medium block mb-1">Mês</label>
               <Select
-                value={localFilter.month || ""}
+                value={localFilter.type && localFilter.type !== "" ? localFilter.type : "all"}
                 onValueChange={(value) => setLocalFilter(prev => ({ ...prev, month: value || null }))}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Todos os meses" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Todos os meses</SelectItem>
+                  <SelectItem value="all">Todos os meses</SelectItem>
                   <SelectItem value="Janeiro">Janeiro</SelectItem>
                   <SelectItem value="Fevereiro">Fevereiro</SelectItem>
                   <SelectItem value="Março">Março</SelectItem>
