@@ -1,5 +1,7 @@
 // Utilitários para widgets do dashboard
 
+import { Transaction } from "@/app/actions";
+
 export interface SavingsGoalConfig {
   title: string;
   target: number;
@@ -27,7 +29,7 @@ export const formatCurrency = (value: number): string => {
   });
 };
 
-export const calculateTotalIncome = (transactions: any[]): number => {
+export const calculateTotalIncome = (transactions: Transaction[]): number => {
   return transactions
     .filter(
       t =>
@@ -37,7 +39,7 @@ export const calculateTotalIncome = (transactions: any[]): number => {
     .reduce((sum, t) => sum + parseTransactionValue(t.value), 0);
 };
 
-export const calculateTotalExpenses = (transactions: any[]): number => {
+export const calculateTotalExpenses = (transactions: Transaction[]): number => {
   return transactions
     .filter(
       t =>
