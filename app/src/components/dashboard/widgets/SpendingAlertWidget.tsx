@@ -22,7 +22,6 @@ interface SpendingAlertWidgetProps {
 }
 
 export function SpendingAlertWidget({
-  id,
   config,
   currentSpending,
   isCustomizing,
@@ -47,11 +46,11 @@ export function SpendingAlertWidget({
     setIsEditing(false);
   };
 
-  const getAlertColor = () => {
-    if (isOverLimit) return "red";
-    if (isNearLimit) return "yellow";
-    return "green";
-  };
+  // const getAlertColor = () => {
+  //   if (isOverLimit) return "red";
+  //   if (isNearLimit) return "yellow";
+  //   return "green";
+  // };
 
   const getAlertMessage = () => {
     if (isOverLimit) {

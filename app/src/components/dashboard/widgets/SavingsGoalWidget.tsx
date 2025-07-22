@@ -15,7 +15,6 @@ interface SavingsGoalWidgetProps {
 }
 
 export function SavingsGoalWidget({
-  id,
   config,
   currentAmount,
   isCustomizing,

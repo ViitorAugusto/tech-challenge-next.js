@@ -4,9 +4,6 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Transaction } from "@/app/actions";
 import {
-  calculateTotalIncome,
-  calculateTotalExpenses,
-  getDefaultWidgets,
   SavingsGoalConfig,
   SpendingAlertConfig,
 } from "./widgets/widgetUtils";
