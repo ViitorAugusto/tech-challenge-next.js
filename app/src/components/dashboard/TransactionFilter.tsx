@@ -12,6 +12,7 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { useTransactionsStore } from "@/redux/store/transactionsStore";
+import { Eraser } from "lucide-react";
 
 export function TransactionFilter() {
   const { filter, setFilter, resetFilter } = useTransactionsStore();
@@ -88,15 +89,15 @@ export function TransactionFilter() {
       {showFilters && (
         <div className="mt-3 p-3 border rounded-md bg-gray-50">
           <div className="flex justify-between items-center mb-3">
-            <h3 className="font-medium">Filtros avançados</h3>
-            <Button variant="ghost" size="sm" onClick={clearFilters}>
-              <X className="h-4 w-4 mr-1" /> Limpar filtros
+            <h3 className="font-medium text-md">Filtros avançados</h3>
+            <Button variant="ghost" size="sm" onClick={clearFilters} className="px-0" title="Limpar filtros">
+              <Eraser className="h-4 w-4 stroke-red-400" /> 
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div className="flex flex-col w-full gap-3">
             <div>
-              <label className="text-sm font-medium block mb-1">Tipo</label>
+              <label className="text-xs font-medium block mb-1">Tipo</label>
               <Select
                 value={localFilter.type || "all"}
                 onValueChange={(value) => setLocalFilter(prev => ({ ...prev, type: value || null }))}
@@ -114,7 +115,7 @@ export function TransactionFilter() {
             </div>
 
             <div>
-              <label className="text-sm font-medium block mb-1">Mês</label>
+              <label className="text-xs font-medium block mb-1">Mês</label>
               <Select
                 value={localFilter.type && localFilter.type !== "" ? localFilter.type : "all"}
                 onValueChange={(value) => setLocalFilter(prev => ({ ...prev, month: value || null }))}
@@ -142,18 +143,19 @@ export function TransactionFilter() {
 
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="text-sm font-medium block mb-1">Valor mínimo</label>
+                <label className="text-xs font-medium block mb-1">Valor mínimo</label>
                 <Input
-                  type="text"
+                  type="number"
                   placeholder="R$ 0,00"
                   value={localFilter.minValue || ''}
                   onChange={(e) => setLocalFilter(prev => ({ ...prev, minValue: e.target.value || null }))}
                 />
               </div>
+              
               <div>
-                <label className="text-sm font-medium block mb-1">Valor máximo</label>
+                <label className="text-xs font-medium block mb-1">Valor máximo</label>
                 <Input
-                  type="text"
+                  type="number"
                   placeholder="R$ 0,00"
                   value={localFilter.maxValue || ''}
                   onChange={(e) => setLocalFilter(prev => ({ ...prev, maxValue: e.target.value || null }))}
