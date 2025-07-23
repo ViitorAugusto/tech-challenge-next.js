@@ -17,18 +17,12 @@ import { Eraser } from "lucide-react";
 export function TransactionFilter() {
   const { filter, setFilter, resetFilter } = useTransactionsStore();
   const [showFilters, setShowFilters] = useState(false);
-
-  // Aplicar os filtros
-  const applyFilters = () => {
-    setFilter({
-      ...filter,
-      page: 1 // Reset para a primeira página ao filtrar
-    });
-  };
+  const [searchTerm, setSearchTerm] = useState('');
 
   // Limpar os filtros
   const clearFilters = () => {
     resetFilter();
+    setSearchTerm('');
     setShowFilters(false);
   };
 
@@ -40,16 +34,16 @@ export function TransactionFilter() {
           <Input
             type="text"
             placeholder="Buscar transações..."
-            value={filter.searchTerm || ''}
+            value={searchTerm || ''}
             onChange={(e) => {
-              setFilter(({  searchTerm: e.target.value }));
+              setSearchTerm( e.target.value);
               if (e.target.value === '') {
-                setFilter({ searchTerm: '' });
+                setSearchTerm('');
               }
             }}
             className="pl-9"
             onKeyDown={(e) => {
-              if (e.key === 'Enter') applyFilters();
+              if (e.key === 'Enter') setFilter({searchTerm});
             }}
           />
           <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -64,7 +58,7 @@ export function TransactionFilter() {
           <Filter className="h-4 w-4" />
         </Button>
 
-        <Button onClick={applyFilters}>Buscar</Button>
+        <Button onClick={() => setFilter({searchTerm})}>Buscar</Button>
       </div>
           { showFilters && (
             
