@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-
 import { Avatar } from "@/components/ui/avatar";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 
@@ -13,7 +12,7 @@ export function Header({ name = "Joana da Silva Oliveira" }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="flex items-center justify-between p-4 relative bg-[#005566]">
+    <header className="flex items-center justify-between p-2 relative bg-[#005566]">
       <div className="flex items-center">
         <button
           onClick={() => setMenuOpen(!menuOpen)}
@@ -24,14 +23,15 @@ export function Header({ name = "Joana da Silva Oliveira" }: HeaderProps) {
           <div className="w-6 h-0.5 bg-green-500" />
         </button>
 
-        <div className="hidden md:flex items-center ">
+        <div className="hidden md:flex items-end">
           <Image
             src="/img/logo.png"
             alt="Logo"
-            width={80}
-            height={80}
+            width={36}
+            height={36}
             className="object-contain cursor-pointer"
           />
+          <h1 className="text-white text-2xl font-bold ml-4">Prime Bank</h1>
         </div>
       </div>
 
