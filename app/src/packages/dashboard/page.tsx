@@ -1,11 +1,11 @@
-import { MicroFrontend } from '@/components/microfrontend/MicroFrontend';
+import { ModuleLoader } from '@/common/loader/ModuleLoader';
 
-export default function DashboardMicroFrontend() {
+export default function DashboardModule() {
   return (
     <div className="container mx-auto my-8 p-4">
       <h1 className="text-2xl font-bold mb-6">Dashboard Financeiro</h1>
 
-      <MicroFrontend
+      <ModuleLoader
         name="dashboardApp"
         host="http://localhost:3002"
         fallback={

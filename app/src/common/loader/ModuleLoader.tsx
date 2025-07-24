@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, ReactNode } from "react";
 
-interface MicroFrontendProps {
+interface ModuleLoaderProps {
   name: string;
   host: string;
   containerId?: string;
@@ -10,12 +10,12 @@ interface MicroFrontendProps {
 }
 
 /*Componente que carrega e renderiza um micro-frontend*/
-export function MicroFrontend({
+export function ModuleLoader({
   name,
   host,
   containerId = `${name}-container`,
   fallback = <div>Carregando micro-frontend...</div>,
-}: MicroFrontendProps) {
+}: ModuleLoaderProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<Error | null>(null);

@@ -1,11 +1,11 @@
-import { MicroFrontend } from '@/components/microfrontend/MicroFrontend';
+import { ModuleLoader } from '@/common/loader/ModuleLoader';
 
-export default function TransactionsMicroFrontend() {
+export default function TransactionsModule() {
   return (
     <div className="container mx-auto my-8 p-4">
       <h1 className="text-2xl font-bold mb-6">Gerenciamento de Transações</h1>
 
-      <MicroFrontend
+      <ModuleLoader
         name="transactionsApp"
         host="http://localhost:3003"
         fallback={
