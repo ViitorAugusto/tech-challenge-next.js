@@ -30,7 +30,7 @@ export function Header({ name = "Joana da Silva Oliveira" }: HeaderProps) {
             alt="Logo"
             width={80}
             height={80}
-            className="object-contain curosr-pointer"
+            className="object-contain cursor-pointer"
           />
         </div>
       </div>

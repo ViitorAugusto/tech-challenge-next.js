@@ -7,15 +7,16 @@ export function Sidebar() {
   const pathname = usePathname();
 
   const menuItems = [
-    { name: "Início", href: "/", active: pathname === "/" },
+    { name: "Início", href: "/", active: pathname === "/", disabled: false },
     {
       name: "Análise Financeiras",
       href: "/analytics",
       active: pathname === "/analytics",
+      disabled: false
     },
-    { name: "Transferências", href: "#", active: false, disabled: true },
-    { name: "Investimentos", href: "#", active: false, disabled: true },
-    { name: "Outros serviços", href: "#", active: false, disabled: true },
+    /*     { name: "Transferências", href: "#", active: false, disabled: true },
+        { name: "Investimentos", href: "#", active: false, disabled: true },
+        { name: "Outros serviços", href: "#", active: false, disabled: true }, */
   ];
 
   return (
@@ -31,11 +32,10 @@ export function Sidebar() {
               ) : (
                 <Link
                   href={item.href}
-                  className={`py-2 border-b font-medium block transition-colors ${
-                    item.active
-                      ? "text-green-600 border-green-500"
-                      : "text-gray-700 border-gray-300 hover:text-green-600 hover:border-green-400"
-                  }`}
+                  className={`py-2 border-b font-medium block transition-colors ${item.active
+                    ? "text-green-600 border-green-500"
+                    : "text-gray-700 border-gray-300 hover:text-green-600 hover:border-green-400"
+                    }`}
                 >
                   {item.name}
                 </Link>

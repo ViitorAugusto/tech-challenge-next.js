@@ -1,8 +1,10 @@
 import { getPaginatedTransactions } from "@/app/transactionActions";
 import { TransactionStatementClient } from "./TransactionStatementClient";
+import { FilterToggleButton } from "./FilterToggleButton";
 
 export async function TransactionStatement({ userId = "1" }: { userId?: string }) {
   // Buscamos apenas a primeira página de transações inicialmente
+  // Por padrão, transações vêm ordenadas da mais recente para a mais antiga (sortDirection="desc")
   const { transactions, totalCount, hasMore } = await getPaginatedTransactions({
     userId,
     page: 1,
@@ -11,7 +13,10 @@ export async function TransactionStatement({ userId = "1" }: { userId?: string }
 
   return (
     <div className="lg:block lg:w-80 bg-white p-4 m-4 rounded-lg h-[500px]">
-      <h3 className="text-[25px] font-bold mb-6">Extrato</h3>
+      <div className="flex items-center justify-between mb-6">
+        <h3 className="text-[25px] font-bold">Extrato</h3>
+        <FilterToggleButton />
+      </div>
 
       <div className="space-y-4">
         {transactions.length === 0 ? (

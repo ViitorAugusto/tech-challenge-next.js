@@ -11,6 +11,7 @@ export interface TransactionFilterParams {
   minValue?: string;
   maxValue?: string;
   searchTerm?: string;
+  sortDirection?: "asc" | "desc"; // Adicionamos opção para controlar a direção da ordenação
 }
 
 export async function getPaginatedTransactions({
@@ -22,6 +23,7 @@ export async function getPaginatedTransactions({
   minValue,
   maxValue,
   searchTerm,
+  sortDirection = "desc", // Por padrão, ordena da mais nova para a mais antiga
 }: TransactionFilterParams): Promise<{
   transactions: Transaction[];
   totalCount: number;
@@ -124,7 +126,12 @@ export async function getPaginatedTransactions({
           parseInt(timeB[2])
         );
 
-        return dateB.getTime() - dateA.getTime(); // Ordem decrescente (mais recente primeiro)
+        // Aplicamos a direção da ordenação conforme solicitado
+        if (sortDirection === "asc") {
+          return dateA.getTime() - dateB.getTime(); // Ordem crescente (mais antiga primeiro)
+        } else {
+          return dateB.getTime() - dateA.getTime(); // Ordem decrescente (mais recente primeiro)
+        }
       } catch {
         return 0;
       }
