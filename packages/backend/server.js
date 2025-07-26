@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 
 dotenv.config(); 
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3001;
 
 server.use(middlewares);
 server.use(router);
