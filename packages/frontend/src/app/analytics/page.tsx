@@ -1,11 +1,21 @@
+'use client';
 export const dynamic = 'force-dynamic'; 
-import { getUserTransactions } from "../actions";
+import { getUserTransactions, Transaction } from "../actions";
 import { ChartsSection } from "@/app/analytics/_components/ChartsSection";
 import { DashboardCustomization } from "@/components/dashboard/DashboardCustomization";
+import { useEffect, useState } from "react";
 
 
-export default async function AnalyticsPage() {
-  const transactions = await getUserTransactions("1");
+export default function AnalyticsPage() {
+  const [transactions, setTransactions] =  useState<Transaction[]>([])
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      const data = await getUserTransactions();
+      setTransactions(data);
+    }
+    fetchTransactions();
+  }, [])
 
   return (
     <div className="space-y-6 md:pl-6">
@@ -29,7 +39,7 @@ export default async function AnalyticsPage() {
                 Total de Transações
               </p>
               <p className="text-2xl font-bold text-gray-900 mt-2">
-                {transactions.length}
+                {transactions?.length}
               </p>
             </div>
             <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
@@ -59,12 +69,12 @@ export default async function AnalyticsPage() {
               <p className="text-2xl font-bold text-gray-900 mt-2">
                 R${" "}
                 {transactions
-                  .filter(
+                  ?.filter(
                     t =>
                       t.type === "deposit" ||
                       (t.type === "transfer" && t.transferSign === "add")
                   )
-                  .reduce(
+                  ?.reduce(
                     (sum, t) =>
                       sum +
                       parseFloat(
@@ -72,7 +82,7 @@ export default async function AnalyticsPage() {
                       ),
                     0
                   )
-                  .toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                  ?.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
               </p>
             </div>
             <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
@@ -102,12 +112,12 @@ export default async function AnalyticsPage() {
               <p className="text-2xl font-bold text-gray-900 mt-2">
                 R${" "}
                 {transactions
-                  .filter(
+                  ?.filter(
                     t =>
                       t.type === "payment" ||
                       (t.type === "transfer" && t.transferSign === "sub")
                   )
-                  .reduce(
+                  ?.reduce(
                     (sum, t) =>
                       sum +
                       parseFloat(
@@ -115,7 +125,7 @@ export default async function AnalyticsPage() {
                       ),
                     0
                   )
-                  .toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                  ?.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
               </p>
             </div>
             <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
@@ -146,12 +156,12 @@ export default async function AnalyticsPage() {
                 R${" "}
                 {(
                   transactions
-                    .filter(
+                    ?.filter(
                       t =>
                         t.type === "deposit" ||
                         (t.type === "transfer" && t.transferSign === "add")
                     )
-                    .reduce(
+                    ?.reduce(
                       (sum, t) =>
                         sum +
                         parseFloat(
@@ -160,12 +170,12 @@ export default async function AnalyticsPage() {
                       0
                     ) -
                   transactions
-                    .filter(
+                   ?.filter(
                       t =>
                         t.type === "payment" ||
                         (t.type === "transfer" && t.transferSign === "sub")
                     )
-                    .reduce(
+                    ?.reduce(
                       (sum, t) =>
                         sum +
                         parseFloat(
@@ -173,7 +183,7 @@ export default async function AnalyticsPage() {
                         ),
                       0
                     )
-                ).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                )?.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
               </p>
             </div>
             <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
