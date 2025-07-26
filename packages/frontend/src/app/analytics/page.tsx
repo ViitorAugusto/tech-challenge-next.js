@@ -1,6 +1,8 @@
+export const dynamic = 'force-dynamic'; 
 import { getUserTransactions } from "../actions";
 import { ChartsSection } from "@/app/analytics/_components/ChartsSection";
 import { DashboardCustomization } from "@/components/dashboard/DashboardCustomization";
+
 
 export default async function AnalyticsPage() {
   const transactions = await getUserTransactions("1");
