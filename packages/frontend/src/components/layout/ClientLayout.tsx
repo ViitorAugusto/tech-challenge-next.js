@@ -5,15 +5,17 @@ import { Sidebar } from "./Sidebar";
 import { TransactionStatement } from "../dashboard/TransactionStatement";
 import { Header } from "./Header";
 import { Tabs } from "../ui/tabs";
+import { API_BASE_URL } from "@/constants/envs";
 
 export function ClientLayout({ children }: { children: ReactNode }) {
   const [userName, setUserName] = useState("Usuário");
   const [refresh, setRefresh] = useState(0);
 
+
   useEffect(() => {
     async function fetchUserName() {
       try {
-        const res = await fetch("http://localhost:3001/users/1");
+        const res = await fetch(`${API_BASE_URL}/users/1`);
         const user = await res.json();
         setUserName(user.name);
       } catch (error) {
