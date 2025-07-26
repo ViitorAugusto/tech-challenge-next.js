@@ -55,6 +55,7 @@ export function TransactionForm() {
     if (type && e.target.value) setError("");
     else if (!e.target.value) setError("Preencha o tipo e o valor da transação.");
   };
+  
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!type || !value) {

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { BalanceToggleClient } from "./BalanceToggleClient";
+import { API_BASE_URL } from "@/constants/envs";
 
 interface AccountCardProps {
   userId?: string;
@@ -45,7 +46,7 @@ function calculateBalance(transactions: Transaction[] = []): string {
 }
 
 async function getUserData(userId: string = "1"): Promise<User> {
-  const res = await fetch(`http://localhost:3001/users/${userId}`, {
+  const res = await fetch(`${API_BASE_URL}/users/${userId}`, {
     cache: "no-store",
   });
   if (!res.ok) {

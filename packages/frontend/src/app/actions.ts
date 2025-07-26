@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { API_BASE_URL } from "@/constants/envs";
 
 export interface Transaction {
   id: string;
@@ -15,7 +16,7 @@ export async function getUserTransactions(
   userId: string = "1"
 ): Promise<Transaction[]> {
   try {
-    const res = await fetch(`http://localhost:3001/users/${userId}`, {
+    const res = await fetch(`${API_BASE_URL}/users/${userId}`, {
       cache: "no-store",
     });
 
@@ -67,7 +68,7 @@ export async function getUserTransactions(
 
 export async function addTransaction(transaction: Transaction) {
   try {
-    const res = await fetch("http://localhost:3001/users/1");
+    const res = await fetch(`${API_BASE_URL}/users/1`);
 
     if (!res.ok) {
       throw new Error("Falha ao obter dados do usuário");
@@ -76,7 +77,7 @@ export async function addTransaction(transaction: Transaction) {
     const user = await res.json();
     const updatedTransactions = [...(user.transactions || []), transaction];
 
-    const updateRes = await fetch("http://localhost:3001/users/1", {
+    const updateRes = await fetch(`${API_BASE_URL}/users/1`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ transactions: updatedTransactions }),
@@ -101,7 +102,7 @@ export async function updateTransaction(
   userId: string = "1"
 ) {
   try {
-    const res = await fetch(`http://localhost:3001/users/${userId}`);
+    const res = await fetch(`${API_BASE_URL}/users/${userId}`);
 
     if (!res.ok) {
       throw new Error("Falha ao obter dados do usuário");
@@ -112,7 +113,7 @@ export async function updateTransaction(
       t.id === updatedTransaction.id ? updatedTransaction : t
     );
 
-    const updateRes = await fetch(`http://localhost:3001/users/${userId}`, {
+    const updateRes = await fetch(`${API_BASE_URL}/users/${userId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ transactions: updatedTransactions }),
@@ -137,7 +138,7 @@ export async function deleteTransaction(
   userId: string = "1"
 ) {
   try {
-    const res = await fetch(`http://localhost:3001/users/${userId}`);
+    const res = await fetch(`${API_BASE_URL}/users/${userId}`);
 
     if (!res.ok) {
       throw new Error("Falha ao obter dados do usuário");
@@ -148,7 +149,7 @@ export async function deleteTransaction(
       (t: Transaction) => t.id !== transactionId
     );
 
-    const updateRes = await fetch(`http://localhost:3001/users/${userId}`, {
+    const updateRes = await fetch(`${API_BASE_URL}/users/${userId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ transactions: updatedTransactions }),

@@ -1,6 +1,7 @@
 "use server";
 
 import { Transaction } from "./actions";
+import { API_BASE_URL } from "@/constants/envs";
 
 export interface TransactionFilterParams {
   userId?: string;
@@ -31,7 +32,7 @@ export async function getPaginatedTransactions({
 }> {
   try {
     // Buscar o usuário e suas transações
-    const res = await fetch(`http://localhost:3001/users/${userId}`, {
+    const res = await fetch(`${API_BASE_URL}/users/${userId}`, {
       cache: "no-store",
     });
 

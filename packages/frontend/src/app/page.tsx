@@ -1,6 +1,7 @@
 import { AccountCard } from "@/components/dashboard/AccountCard";
 import { TransactionForm } from "@/components/dashboard/TransactionForm";
 import { TransactionStatement } from "@/components/dashboard/TransactionStatement";
+export const dynamic = 'force-dynamic';
 
 export default async function BankingInterface() {
   return (
