@@ -1,0 +1,25 @@
+{
+  "name": "prime-bank",
+  "version": "1.0.0",
+  "description": "Este é um projeto [Next.js](https://nextjs.org) inicializado com [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).",
+  "workspaces": [
+    "packages/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ViitorAugusto/tech-challenge-next.js.git"
+  },
+  "scripts": {
+    "start:backend": "npm start --workspace=prime-bank-backend",
+    "start:frontend": "npm run dev --workspace=prime-bank-frontend",
+    "build:frontend": "npm run build --workspace=prime-bank-frontend"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ViitorAugusto/tech-challenge-next.js/issues"
+  },
+  "homepage": "https://github.com/ViitorAugusto/tech-challenge-next.js#readme"
+}
