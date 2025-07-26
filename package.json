@@ -12,7 +12,8 @@
   "scripts": {
     "start:backend": "npm start --workspace=prime-bank-backend",
     "start:frontend": "npm run dev --workspace=prime-bank-frontend",
-    "build:frontend": "npm run build --workspace=prime-bank-frontend"
+    "build:frontend": "npm run build --workspace=prime-bank-frontend",
+    "compose:up": "docker-compose up --build"
   },
   "keywords": [],
   "author": "",
