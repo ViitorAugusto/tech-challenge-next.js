@@ -1,0 +1,52 @@
+version: "3.8"
+
+services:
+  # Serviço de Backend (JSON Server)
+  backend: 
+    build:
+      context: . 
+      dockerfile: packages/backend/Dockerfile 
+    ports:
+      - "3001:3001" 
+    environment:
+      - NODE_ENV=production
+      - PORT=3001 
+    restart: unless-stopped
+    volumes:
+      # Monta o db.json do host no contêiner para persistência em desenvolvimento local (opcional)
+      - ./packages/backend/db.json:/app/db.json
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3001/users || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  # Serviço de Frontend (Next.js)
+  frontend: 
+    build:
+      context: .
+      dockerfile: packages/frontend/Dockerfile
+    ports:
+      - "3000:3000" 
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_BASE_URL=http://backend:3001
+      - NODE_OPTIONS=--no-warnings
+    restart: unless-stopped
+    depends_on:
+      - backend 
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+networks:
+  app-network:
+    driver: bridge
