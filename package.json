@@ -14,7 +14,7 @@
     "start:frontend": "npm run dev --workspace=prime-bank-frontend",
     "build:frontend": "npm run build --workspace=prime-bank-frontend",
     "compose:up": "docker-compose up --build",
-    "install": "npm install --workspace=prime-bank-frontend && npm install --workspace=prime-bank-backend"
+    "install:all": "npm install --workspace=prime-bank-frontend && npm install --workspace=prime-bank-backend"
   },
   "keywords": [],
   "author": "",
